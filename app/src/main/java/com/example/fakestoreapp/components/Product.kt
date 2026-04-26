@@ -5,13 +5,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,21 +41,20 @@ fun ProductItem(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .height(260.dp) // Altura fija para mantener la cuadrícula simétrica
+            .height(245.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(16.dp), // Bordes bien redondeados
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), // Sombra sutil
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Mitad superior: Fondo suave (tipo aparador) con la imagen
             Box(
                 modifier = Modifier
-                    .weight(1.2f) // Toma un poco más de la mitad del espacio
+                    .weight(1.2f)
                     .fillMaxWidth()
-                    .background(Color(0xFFF5F5F8)), // Un gris/azulado muy claro
+                    .background(Color(0xFFF5F5F8)),
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
@@ -61,29 +67,54 @@ fun ProductItem(
                 )
             }
 
-            // Mitad inferior: Textos (Título y Precio)
-            Column(
+            Row(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.SpaceBetween // Empuja el precio hacia abajo
+                    .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 6.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                Text(
-                    text = product.title,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.DarkGray,
-                    maxLines = 2, // Vital para que no rompa el diseño
-                    overflow = TextOverflow.Ellipsis
-                )
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "$${product.price}",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Black,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
 
-                Text(
-                    text = "$${product.price}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = MaterialTheme.colorScheme.primary // Usa el color principal de tu tema
-                )
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = product.title,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.DarkGray,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = Color(0xFFFFC107),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        text = product.rating.rate.toString(),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

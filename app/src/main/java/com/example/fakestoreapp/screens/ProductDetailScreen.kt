@@ -99,16 +99,16 @@ fun ProductDetailScreen(id: Int) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF5A5278), Color(0xFFBCB3F0))
+                        )
+                    )
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1.3f)
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(Color(0xFF5A5278), Color(0xFFBCB3F0))
-                            )
-                        )
                 ) {
                     AsyncImage(
                         model = product!!.image,

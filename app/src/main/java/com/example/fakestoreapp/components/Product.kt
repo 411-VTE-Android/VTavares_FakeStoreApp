@@ -54,7 +54,7 @@ fun ProductItem(
                 modifier = Modifier
                     .weight(1.2f)
                     .fillMaxWidth()
-                    .background(Color(0xFFF5F5F8)),
+                    .background(Color(0xFFEAE8F0)),
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(

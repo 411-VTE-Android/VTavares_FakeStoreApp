@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -86,7 +87,7 @@ fun ProductDetailScreen(id: Int) {
                             onClick = { },
                             modifier = Modifier.height(56.dp).width(200.dp),
                             shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5A5278))
                         ) {
                             Text("Añadir al carrito", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                         }
@@ -98,25 +99,27 @@ fun ProductDetailScreen(id: Int) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color(0xFFF5F5F8)) // Fondo gris claro consistente
             ) {
-                // BLOQUE SUPERIOR: Imagen Maximizada
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1.3f) // Aumentamos el peso para que la imagen sea más grande
+                        .weight(1.3f)
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(Color(0xFF5A5278), Color(0xFFBCB3F0))
+                            )
+                        )
                 ) {
                     AsyncImage(
                         model = product!!.image,
                         contentDescription = product!!.title,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(20.dp), // Reducimos padding para que la imagen crezca
+                            .padding(20.dp),
                         contentScale = ContentScale.Fit
                     )
                 }
 
-                // BLOQUE INFERIOR: Información
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -139,31 +142,28 @@ fun ProductDetailScreen(id: Int) {
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // FILA DE CHIPS (Efecto Cristal)
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            // Chip de Categoría
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = Color.Gray.copy(alpha = 0.1f),
-                                modifier = Modifier.border(1.dp, Color.Gray.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+                                color = Color(0xFFBCB3F0).copy(alpha = 0.15f),
+                                modifier = Modifier.border(1.dp, Color(0xFFBCB3F0).copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                             ) {
                                 Text(
                                     text = product!!.category.uppercase(),
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color.DarkGray
+                                    color = Color(0xFF5A5278)
                                 )
                             }
 
-                            // Chip de Rating (Efecto Cristal)
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = Color.Gray.copy(alpha = 0.1f),
-                                modifier = Modifier.border(1.dp, Color.Gray.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+                                color = Color(0xFFBCB3F0).copy(alpha = 0.15f),
+                                modifier = Modifier.border(1.dp, Color(0xFFBCB3F0).copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                             ) {
                                 Row(
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
@@ -171,7 +171,12 @@ fun ProductDetailScreen(id: Int) {
                                 ) {
                                     Icon(Icons.Filled.Star, contentDescription = null, tint = Color(0xFFFFC107), modifier = Modifier.size(16.dp))
                                     Spacer(modifier = Modifier.width(4.dp))
-                                    Text(text = product!!.rating.rate.toString(), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelMedium)
+                                    Text(
+                                        text = product!!.rating.rate.toString(),
+                                        fontWeight = FontWeight.Bold,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = Color(0xFF5A5278)
+                                    )
                                 }
                             }
                         }
